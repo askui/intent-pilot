@@ -3,9 +3,9 @@ import requests
 import json
 from intent_pilot.utils.encoding import encode_string, encode_image
 from intent_pilot.utils.img_utils import draw_bboxes, open_pil_image
+from intent_pilot.utils.config import Config
 
-workspaceId=os.getenv("ASKUI_WORKSPACE_ID")
-token=os.getenv("ASKUI_TOKEN")
+config = Config()
 
 def request_image_annotation(
     image_file: str, workspace_id: str, token_id: str, inference_endpoint: str = "https://inference.askui.com"
@@ -22,12 +22,27 @@ def request_image_annotation(
     return response
 
 
-def get_labeled_image(filename):
-    annotated_data = request_image_annotation(filename, workspaceId, token)
+def get_label_coordinates(annotated_data, skip_labels=[]):
+    label_coordinates = {}
+    label_coordinates['indices'] = {}
+    for skip_label in skip_labels:
+        label_coordinates[skip_label] = {}
+
+    for idx, element in enumerate(annotated_data['data']['detected_elements'], 1):
+        element_type = element["name"]
+        if element_type in skip_labels:
+            label_coordinates[element_type][element[element_type]] = element["bndbox"]
+        else:
+            label_coordinates['indices'][idx] = element["bndbox"]
+    return label_coordinates
+
+def get_labeled_image(filename, skip_labels=[]):
+    annotated_data = request_image_annotation(filename, config.aui_workspace_id, config.aui_token)
     try:
         annotated_data = annotated_data.json()
     except Exception as exc:
         raise PermissionError(f"AskUI credentials down {str(annotated_data)} from {exc}")
     image = open_pil_image(filename)
-    pil_image_with_bboxes = draw_bboxes(image, annotated_data)
-    return pil_image_with_bboxes, annotated_data
+    label_coordinates =  get_label_coordinates(annotated_data, skip_labels=skip_labels)
+    pil_image_with_bboxes = draw_bboxes(image, label_coordinates["indices"])
+    return pil_image_with_bboxes, label_coordinates

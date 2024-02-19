@@ -27,9 +27,18 @@ class Config:
         self.openai_api_key = (
             None  # instance variables are backups in case saving to a `.env` fails
         )
+        self.aui_workspace_id=None
+        self.aui_token=None
+        self.openai_temperature = 0.1
+        self.openai_max_tokens = 1000
+    
+    def initialize_askui(self):
+        self.aui_workspace_id=os.getenv("ASKUI_WORKSPACE_ID")
+        self.aui_token=os.getenv("ASKUI_TOKEN")
 
-
-    def initialize_openai(self):
+    def initialize_openai(self, temperature=0.7, max_tokens=1000):
+        self.openai_temperature = temperature
+        self.openai_max_tokens = max_tokens
         if self.openai_api_key:
             api_key = self.openai_api_key
         else:

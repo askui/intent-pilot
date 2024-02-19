@@ -1,15 +1,8 @@
 
 from PIL import Image, ImageDraw
-import json
+from fuzzywuzzy import process
 import re
-import base64
-import json
-import requests
-import copy
-import os
 from PIL import ImageFont
-
-openai_api_key = os.getenv("OPENAI_API_KEY")
 
 def open_pil_image(image_file):
     image = Image.open(image_file).convert("RGB")
@@ -19,88 +12,25 @@ def save_pil_image(image, filename = "uploaded_image.png"):
     image.save(filename)
     return filename
 
-def send_to_gpt(base64_image, query):
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {openai_api_key}"
-    }
-
-    payload = {
-        "model": "gpt-4-vision-preview",
-        "temperature": 0.1,
-        "messages": [
-        {
-            "role": "user",
-            "content": [
-            {
-                "type": "text",
-                "text": f"Hey, imagine that you are guiding me navigating the UI elements in the provided image(s). All the UI elements are numbered for reference. The associated numbers are on top left of corresponding bbox. For the prompt/query asked, return the number associated to the target element to perform the action. query: {query}"
-            },
-            {
-                "type": "image_url",
-                "image_url": {
-                "url": f"data:image/jpeg;base64,{base64_image}"
-                }
-            }
-            ]
-        }
-        ],
-        "max_tokens": 300
-    }
-
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-
-    return response.json()
-
-def process_data(rawdata):
-    data = copy.deepcopy(rawdata)
-    newdata = {}
-    newdata['detected_elements'] = []
-    for element in data['data']['detected_elements']:
-        # Remove 'colors' key
-        if 'colors' in element:
-            del element['colors']
-
-        # Convert bbox coordinates to integers
-        bbox = element['bndbox']
-        for key in bbox:
-            bbox[key] = int(bbox[key])
-
-        # Convert bbox coordinates to center
-        center_x = int((bbox['xmin'] + bbox['xmax']) / 2)
-        center_y = int((bbox['ymin'] + bbox['ymax']) / 2)
-        bbox['x'] = center_x
-        bbox['y'] = center_y
-
-        # Remove original bbox coordinates
-        del bbox['xmin']
-        del bbox['xmax']
-        del bbox['ymin']
-        del bbox['ymax']
-
-        # convert dict to tuple
-        element = [bbox['x'], bbox['y'], element['name'], element['text']]
-        newdata['detected_elements'].append(element)
-    return newdata
-
-def draw_bboxes(image, data):
+def draw_bboxes(image, label_coordinates, font_style= "arial.ttf",font_size=20):
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", 20)  # Load a font of size 15 for 1024x768 images. Adjust as needed.
-    
-    for idx, element in enumerate(data["data"]["detected_elements"], 1):
-        bbox = element["bndbox"]
+    font = ImageFont.truetype(font_style, font_size)  # Load a font of size 15 for 1024x768 images. Adjust as needed.
+
+    for idx in label_coordinates:
+        bbox = label_coordinates[idx]
         xmin = int(bbox["xmin"])
         ymin = int(bbox["ymin"])
         xmax = int(bbox["xmax"])
         ymax = int(bbox["ymax"])
-        element["tagid"] = idx
 
+        area_of_rectangle = (xmax - xmin) * (ymax - ymin)
+        if area_of_rectangle < 100:
+            continue
         # Draw the bounding box
-        draw.rectangle([(xmin, ymin), (xmax, ymax)], outline="green")
+        draw.rectangle([(xmin, ymin), (xmax, ymax)], outline="red", width=3)
 
         # Draw the number with a background
         num_str = str(idx)
-        # text_width, text_height = draw.textsize(num_str, font=font)
 
         # Using textbbox to calculate the bounding box of the text
         left, top, right, bottom = draw.textbbox((0, 0), num_str, font=font)
@@ -109,9 +39,6 @@ def draw_bboxes(image, data):
 
         draw.rectangle([(xmin, ymin - text_height), (xmin + text_width, ymin+5)], fill="black")
         draw.text((xmin, ymin - text_height), num_str, font=font, fill="white")
-
-        # For debugging, remove if not needed
-        # draw.text((xmin, ymin-10-text_height), (element['name'] + "-" + element['text']).encode('utf-8'), fill="red")
     return image
 
 def draw_transparent_bboxes(image, data):
@@ -135,25 +62,37 @@ def draw_transparent_bboxes(image, data):
     combined = Image.alpha_composite(image.convert('RGBA'), overlay)
     return combined.convert("RGB")
 
-def process_image(data, command, filename, rawdata):
-    # Load the image
-    image = Image.open(filename).convert("RGB")
-    image_with_bboxes = draw_bboxes(image, rawdata)
-    # Draw a red dot on the image at the given coordinates
-    draw = ImageDraw.Draw(image_with_bboxes)
-
-    return image
-
 def extract_numbers(sentence):
     pattern = r'\d+'  # Match one or more digits
     numbers = re.findall(pattern, sentence)  # Find all matches in the sentence
     numbers = [int(num) for num in numbers if num.isnumeric()]  # Convert to integers
     return numbers
 
+def flexible_query_search(query, list_of_strings):
+    match = process.extractOne(query, list_of_strings)
+    return match[0]
 
-def extract_element_bbox(indices, raw_data):
-    for num in indices:
-        for inst in raw_data["data"]["detected_elements"]:
-            if inst["tagid"] == num:
-                return [inst["bndbox"]["xmin"],inst["bndbox"]["ymin"],inst["bndbox"]["xmax"],inst["bndbox"]["ymax"]]
-    return -1
+
+def extract_element_bbox(query, raw_data, flexible_search=False):
+    """
+    Extracts the bounding box of an element based on the query from the raw data.
+    
+    Args:
+        query (str): The label of the element to search for.
+        raw_data (dict): The raw data containing the element labels and their corresponding bounding boxes.
+        flexible_search (bool, optional): If True, performs a flexible search to find the closest matching label. 
+            Defaults to False.
+    
+    Returns:
+        dict: The bounding box of the element.
+    
+    Raises:
+        KeyError: If the element with the specified label is not found in the data and flexible_search is False.
+    """
+    try:
+        return raw_data[query]
+    except KeyError as exc:
+        if flexible_search:
+            closest_query = flexible_query_search(query, raw_data.keys())
+            return raw_data[closest_query]
+        raise KeyError(f"Element with label '{query}' not found in the data.") from exc
