@@ -51,7 +51,6 @@ def call_gpt_4_vision_preview_labeled(openai_client, messages, objective,
         user_prompt = get_relative_user_prompt(len(messages))
         vision_message = format_gpt4v_message(user_prompt, img_base64_labeled)
         messages.append(vision_message)
-        response = get_response_from_gpt4v(openai_client, messages, temperature=config.openai_temperature, max_tokens=config.openai_max_tokens)
         response = openai_client.chat.completions.create(
             model="gpt-4-vision-preview",
             messages=messages,
