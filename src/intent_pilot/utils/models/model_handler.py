@@ -34,6 +34,13 @@ def save_labeled_pil_img_in_folder(annotated_pil_image: Image, screenshots_dir: 
     annotated_pil_image.save(labeled_img_path)
     return labeled_img_path
 
+def remove_code_block(content):
+    if content.startswith("```json"):
+        content = content[len("```json") :]
+        if content.endswith("```"):
+            content = content[: -len("```")]
+    return content
+
 
 def call_gpt_4_vision_preview_labeled(openai_client, messages, objective, 
                                       screenshots_dir: Path = Path("screenshots"),
@@ -51,51 +58,14 @@ def call_gpt_4_vision_preview_labeled(openai_client, messages, objective,
         user_prompt = get_relative_user_prompt(len(messages))
         vision_message = format_gpt4v_message(user_prompt, img_base64_labeled)
         messages.append(vision_message)
-        response = openai_client.chat.completions.create(
-            model="gpt-4-vision-preview",
-            messages=messages,
-            presence_penalty=1,
-            frequency_penalty=1,
-            temperature=0.7,
-            max_tokens=1000,
-        )
-
-        content = response.choices[0].message.content
+        content = get_response_from_gpt4v(openai_client, messages, temperature=config.openai_temperature, max_tokens=config.openai_max_tokens)
         print("[Intent Pilot][call_gpt_4_vision_preview_labeled] content", content)
-
-        # content = content.removeprefix(prefix).removesuffix(suffix)
-        if content.startswith("```json"):
-            content = content[len("```json") :]  # Remove starting ```json
-            if content.endswith("```"):
-                content = content[: -len("```")]  # Remove ending
-
+        content = remove_code_block(content)
         assistant_message = {"role": "assistant", "content": content}
         messages.append(assistant_message)
-
         content = json.loads(content)
 
-        processed_content = []
-
-        for operation in content:
-            if operation.get("operation") == "click-text" or operation.get("operation") == "click-icon":
-                if operation.get("operation") == "click-text":
-                    text = operation.get("text", None)
-                    coordinates = extract_element_bbox(text, label_coordinates["text"], flexible_search=True)
-                elif operation.get("operation") == "click-icon":
-                    label = operation.get("label", None)
-                    coordinates = extract_element_bbox(int(label), label_coordinates["indices"])
-                
-                operation["operation"] = "click"
-                operation["x"] = (coordinates["xmin"] + coordinates["xmax"])/2
-                operation["y"] = (coordinates["ymin"] + coordinates["ymax"])/2
-                if config.verbose:
-                    print(
-                        "[Intent Pilot][call_gpt_4_vision_preview_labeled] new click operation",
-                        operation,
-                    )
-                processed_content.append(operation)
-            else:
-                processed_content.append(operation)
+        processed_content = merge_click_operations(label_coordinates, content)
 
         if config.verbose:
             print(
@@ -109,3 +79,25 @@ def call_gpt_4_vision_preview_labeled(openai_client, messages, objective,
             print("[Self-Operating Computer][Operate] error", e)
             traceback.print_exc()
         return call_gpt_4_vision_preview_labeled(openai_client, messages, objective)
+
+def calculate_center(bbox):
+    return (bbox["xmin"] + bbox["xmax"]) / 2, (bbox["ymin"] + bbox["ymax"]) / 2
+
+def process_click_operation(operation, label_coordinates):
+    if operation.get("operation") == "click-text":
+        text_bbox = extract_element_bbox(operation.get("text", None), label_coordinates["text"], flexible_search=True)
+        x, y = calculate_center(text_bbox)
+    elif operation.get("operation") == "click-icon":
+        label_bbox = extract_element_bbox(int(operation.get("label", None)), label_coordinates["indices"])
+        x, y = calculate_center(label_bbox)
+    else:
+        return operation
+
+    operation["operation"] = "click"
+    operation["x"] = x
+    operation["y"] = y
+    return operation
+
+def merge_click_operations(label_coordinates, content):
+    processed_content = [process_click_operation(operation, label_coordinates) for operation in content]
+    return processed_content
