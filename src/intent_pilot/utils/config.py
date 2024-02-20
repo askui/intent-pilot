@@ -46,8 +46,9 @@ class AskUIIntentPilotConfig:
     def __read_from_env_or_ask(self, env_name: str) -> str:
         value = os.getenv(env_name)
         if value is None:
-            value = get_env_values([env_name])
-        return value[env_name]
+            value_dict = get_env_values([env_name])
+            value = value_dict[env_name]
+        return value
 
     def is_user_config_exists(self) -> bool:
         return os.path.exists(self.user_config_env_path)
