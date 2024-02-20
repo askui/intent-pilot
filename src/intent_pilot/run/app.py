@@ -7,8 +7,6 @@ from intent_pilot.utils.system_utils import show_notification
 from intent_pilot.utils.terminal import get_user_input
 from prompt_toolkit.shortcuts import message_dialog
 import time
-import os
-
 
 
 def main():
