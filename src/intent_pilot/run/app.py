@@ -1,22 +1,37 @@
-from intent_pilot.utils.config import Config
+from prompt_toolkit import prompt
+from intent_pilot.utils.config import AskUIIntentPilotConfig
 from intent_pilot.utils.models.prompts import get_system_prompt
 from intent_pilot.utils.models.model_handler import call_gpt_4_vision_preview_labeled
 from intent_pilot.utils.controller.thought2command import operate
 from intent_pilot.utils.system_utils import show_notification
-from prompt_toolkit.shortcuts import message_dialog
 from intent_pilot.utils.terminal import get_user_input
+from prompt_toolkit.shortcuts import message_dialog
 import time
-config = Config()
+import os
+
+
 
 def main():
     message_dialog(title="Intent-Pilot", text="An AskUI open source initiative to automate computer operations.",).run()
     model = "gpt-4-with-som"
+    
+    config = AskUIIntentPilotConfig()
+    client = None
+    client = config.initialize_openai()
+    
+    config.initialize_askui()
+
+
+    if not config.is_user_config_exists() and prompt("Do you want to save the config user? y/n: \n") == "y":
+        config.save_config()
+    
     objective = get_user_input()
     system_prompt = get_system_prompt(model, objective)
     system_message = {"role": "system", "content": system_prompt}
     messages = [system_message]
-    client = config.initialize_openai()
-    config.initialize_askui()
+
+
+    
     while True:
         operations = call_gpt_4_vision_preview_labeled(client, messages, objective, skip_som_draw_labels=["text"]) # skip labels some
         show_notification("intent-pilot",f"Thought: {operations[-1]['thought']}")

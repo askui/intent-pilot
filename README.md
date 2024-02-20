@@ -18,17 +18,13 @@ What can be said can be automated
 
 **Intent Pilot** 
 
-bla bla bla
+Intent-Pilot is an orchestration of two tools: AskUI's object detector with OpenAI's GPT-4v to achieve automation. It is designed to automate repetitive tasks, and to assist users in performing complex tasks with ease.
 
 <br>
 
 ## Demo
 
 --video-here
-
-#### An interactive demo is also available on Google Colab:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/)
 
 
 ## Quick Start
@@ -45,17 +41,10 @@ After installation, simply run `intent` in your terminal:
 intent
 ```
 
-### Python
-
-```python
-from intent import Assistant
-
-assistant = Assistant()
-assistant.step("Click on the signup button") # Executes a single command
-assistant.step("Click on the logout button") # Executes a single command
-assistant.task("login and logout from the app") # Plans & Executes a sequence of commands
+In case, you are unable to run the command, try installing the following dependencies for linux platforms:
+```shell
+sudo apt-get install python3-tk python3-dev
 ```
-
 
 # Contributing
 

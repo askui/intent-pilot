@@ -1,8 +1,8 @@
 import time
-from intent_pilot.utils.config import Config
+from intent_pilot.utils.config import AskUIIntentPilotConfig
 from intent_pilot.utils.controller.controller import Controller
 
-config = Config()
+config = AskUIIntentPilotConfig()
 operating_system = Controller()
 
 def operate(operations):
