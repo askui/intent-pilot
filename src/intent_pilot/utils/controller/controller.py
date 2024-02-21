@@ -1,13 +1,24 @@
 import pyautogui
 import time
 import math
+import pyautogui
+import time
+import math
+import platform
+import pyperclip
+os_name = platform.system()
 
 class Controller:
     def write(self, content):
         try:
             content = content.replace("\\n", "\n")
             for char in content:
-                pyautogui.write(char)
+                pyperclip.copy(char)
+                if os_name=="Darwin":
+                    self.press(["command", "v"])
+                else:
+                    self.press(["ctrl", "v"])
+                time.sleep(0.05)
         except Exception as e:
             print("[Controller][write] error:", e)
 

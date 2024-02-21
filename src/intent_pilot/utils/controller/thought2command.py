@@ -1,8 +1,9 @@
 import time
-from intent_pilot.utils.config import AskUIIntentPilotConfig
+from intent_pilot.utils.config import Config
 from intent_pilot.utils.controller.controller import Controller
+from intent_pilot.utils.terminal import ANSI_BLUE, ANSI_RESET, ANSI_BRIGHT_GREEN, ANSI_RED
 
-config = AskUIIntentPilotConfig()
+config = Config()
 operating_system = Controller()
 
 def operate(operations):
@@ -31,27 +32,21 @@ def operate(operations):
         elif operate_type == "done":
             summary = operation.get("summary")
             print(
-                f"[controller] Objective Completed "
-            )
-            print(
-                f"[controller] Summary {summary}"
+                f"{ANSI_BRIGHT_GREEN} [controller] Objective Completed \n\n{summary} {ANSI_RESET}"
             )
             return True
 
         else:
             print(
-                f"[Controller-2command][Error] unknown operation response :("
-            )
-            print(
-                f"[Controller-2command][Error] AI response {operation}"
+                f"{ANSI_RED} [Controller-2command][Error] unknown operation response :( \n\n  AI response: {operation} {ANSI_RESET}"
             )
             return True
 
         print(
-            f"[Controller-2command][Operate] Thought  {operate_thought}"
+            f"{ANSI_BRIGHT_GREEN}[Controller-2command][Operate] Thought  {operate_thought} {ANSI_RESET}"
         )
         print(
-            f"[Controller-2command][Operate] {operate_type}  {operate_detail}"
+            f"{ANSI_BRIGHT_GREEN} [Controller-2command][Operate] {operate_type}  {operate_detail} {ANSI_RESET}"
         )
 
     return False

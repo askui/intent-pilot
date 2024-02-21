@@ -1,9 +1,9 @@
 import platform
-from intent_pilot.utils.config import AskUIIntentPilotConfig
+from intent_pilot.utils.config import Config
 
 # Prompts source: https://github.com/OthersideAI/self-operating-computer/blob/main/operate/models/prompts.py
 
-VERBOSE = AskUIIntentPilotConfig().verbose
+VERBOSE = Config().verbose
 
 USER_QUESTION = "Hello, I can help you with anything. What would you like to be done?"
 

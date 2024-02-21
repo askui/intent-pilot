@@ -7,7 +7,7 @@ from openai import OpenAI
 from intent_pilot.utils.terminal import get_env_values
 
 
-class AskUIIntentPilotConfig:
+class Config:
     """
     Configuration class for managing settings.
 
@@ -21,11 +21,11 @@ class AskUIIntentPilotConfig:
 
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(AskUIIntentPilotConfig, cls).__new__(cls)
+            cls._instance = super(Config, cls).__new__(cls)
         return cls._instance
 
     def __init__(self):
-        self.verbose = True
+        self.verbose = False
         self.openai_api_key = (
             None  # instance variables are backups in case saving to a `.env` fails
         )
@@ -64,7 +64,7 @@ class AskUIIntentPilotConfig:
         if env_var is None:
             raise ValueError("Environment variable not set.")
 
-    def initialize_openai(self, temperature=0.7, max_tokens=1000):
+    def initialize_openai(self, temperature=0.7, max_tokens=4096):
         self.openai_temperature = temperature
         self.openai_max_tokens = max_tokens
         if self.openai_api_key:
