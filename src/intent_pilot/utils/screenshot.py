@@ -2,9 +2,6 @@ import platform
 import subprocess
 import pyautogui
 from PIL import ImageGrab
-import Xlib.display
-import Xlib.X
-
 
 def capture_screen_with_cursor(file_path):
     user_platform = platform.system()
@@ -13,6 +10,8 @@ def capture_screen_with_cursor(file_path):
         screenshot = pyautogui.screenshot()
         screenshot.save(file_path)
     elif user_platform == "Linux":
+        import Xlib.display # global import causes issues on windows
+        import Xlib.X
         # Using xlib to prevent scrot dependency for Linux
         screen = Xlib.display.Display().screen()
         size = screen.width_in_pixels, screen.height_in_pixels
