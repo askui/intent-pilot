@@ -7,13 +7,23 @@ from intent_pilot.utils.system_utils import show_notification
 from intent_pilot.utils.terminal import get_user_input, ANSI_BLUE, ANSI_RESET, ANSI_BRIGHT_GREEN, ANSI_RED                                        
 from prompt_toolkit.shortcuts import message_dialog
 import time
+import argparse
+
+
+def get_args():
+    parser = argparse.ArgumentParser(description="Intent-Pilot")
+    parser.add_argument("--debug", action="store_true", help="Enable verbose mode")
+    args = parser.parse_args()
+    return args
 
 
 def main():
+    args = get_args()
     message_dialog(title="Intent-Pilot", text="An AskUI open source initiative to automate computer operations.",).run()
     model = "gpt-4-with-som"
-    
     config = Config()
+    config.verbose = args.debug
+    
     client = None
     client = config.initialize_openai()
     
@@ -52,8 +62,6 @@ def main():
             break
         else:
             print("More to do ....")
-
-
 
 if __name__ == "__main__":
     try:

@@ -24,8 +24,8 @@ class Config:
             cls._instance = super(Config, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self):
-        self.verbose = False
+    def __init__(self, verbose=False):
+        self.verbose = verbose
         self.openai_api_key = (
             None  # instance variables are backups in case saving to a `.env` fails
         )
