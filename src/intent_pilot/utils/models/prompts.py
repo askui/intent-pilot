@@ -176,7 +176,7 @@ You have 5 possible operation actions available to you. The `pyautogui` library 
 2. click-text: Move mouse and click on text
 [{{ "thought": "write a thought here", "operation": "click-text", "text": "text that needs to be clicked for the task" }}]
 
-Prioritize the click-text operation over the text-icon labeled elements especially when text is the easy way out.
+Prioritize the click-text operation over the click-icon operation especially when text is the easy way out. click-icon functionality by you is flawed currently. Use it only when there's no way out.
 
 3. write - Write with your keyboard
 [{{ "thought": "write a thought here", "operation": "write", "content": "text to write here" }}]
@@ -207,10 +207,9 @@ Here are some helpful combinations:
 
 # Enter the discord server from the website
 [
-    {{ "thought": "I see a discord icon at the bototom. It looks like it has a label", "operation": "click-icon", "label": "34" }},
+    {{ "thought": "I see a discord icon at the bottom. It looks like it has a label", "operation": "click-icon", "label": "34" }},
     {{ "thought": "Now that I clicked on discord server icon, I see the Accept Invite button. I'll go ahead and click the Accept Invite", "operation": "click-text", "text": "Accept Invite" }},
 ]
-
 
 # Send a "Hello World" message in the chat
 [
@@ -229,6 +228,10 @@ Here are some helpful combinations:
     {{ "thought": "To enter a specific channel or conversation, it's more direct and easy to use click-text with the channel or conversation name.", "operation": "click-text", "text": "channel-name" }},
 ]
 
+# To click on the search bar to type in the query for a given query
+[
+    {{ "thought": "I need to click on the search bar to type in the query and it's more direct and easy to use click-text than click-icon", "operation": "click-text", "text": "Search" }},
+]
 
 A few important notes: 
 - If you want to open an app, directly write the name of the app and press enter

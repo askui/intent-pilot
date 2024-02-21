@@ -12,12 +12,11 @@ class Controller:
     def write(self, content):
         try:
             content = content.replace("\\n", "\n")
-            for char in content:
-                pyperclip.copy(char)
-                if os_name=="Darwin":
-                    self.press(["command", "v"])
-                else:
-                    self.press(["ctrl", "v"])
+            pyperclip.copy(content)
+            if os_name=="Darwin":
+                self.press(["command", "v"])
+            else:
+                self.press(["ctrl", "v"])
                 time.sleep(0.05)
         except Exception as e:
             print("[Controller][write] error:", e)

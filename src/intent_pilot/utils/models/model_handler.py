@@ -76,12 +76,12 @@ def call_gpt_4_vision_preview_labeled(openai_client, messages,
     
     content = json.loads(content.replace("  ",""))
     
-    processed_content = merge_click_operations(label_coordinates, content)
-
     if config.verbose:
         print(
-            f"{ANSI_BRIGHT_GREEN} [Intent Pilot][call_gpt_4_vision_preview_labeled] processed_content: {processed_content} {ANSI_RESET}"
+            f"{ANSI_BRIGHT_GREEN} [Intent Pilot][call_gpt_4_vision_preview_labeled] processed_content: {content} {ANSI_RESET}"
         )
+    processed_content = merge_click_operations(label_coordinates, content)
+
     return processed_content
 
 

@@ -64,7 +64,7 @@ class Config:
         if env_var is None:
             raise ValueError("Environment variable not set.")
 
-    def initialize_openai(self, temperature=0.7, max_tokens=4096):
+    def initialize_openai(self, temperature=0.2, max_tokens=4096):
         self.openai_temperature = temperature
         self.openai_max_tokens = max_tokens
         if self.openai_api_key:

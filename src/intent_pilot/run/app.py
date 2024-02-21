@@ -32,7 +32,8 @@ def main():
     while True:
         print(f"{ANSI_BLUE} [Intent Pilot] Step  {step} {ANSI_RESET}")
         step += 1
-        if step > 10:
+        if step > 20:
+            print(f"{ANSI_RED}[Intent Pilot]  {step} steps are completed.. Quitting... {ANSI_RESET}")
             break
         try:
             operations = call_gpt_4_vision_preview_labeled(client, messages, skip_som_draw_labels=["text"]) # skip labels some
@@ -57,7 +58,7 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except Exception as e:
+    except Exception as err:
         print("Error")
-        show_notification("intent-pilot",f"Error - {str(e)}")
-        raise e
+        show_notification("intent-pilot",f"Error - {str(err)}")
+        raise err
