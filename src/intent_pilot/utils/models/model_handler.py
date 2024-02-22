@@ -1,26 +1,22 @@
+import json
 import os
 import time
-import json
-
 import uuid
 from pathlib import Path
-from intent_pilot.utils.screenshot import capture_screen_with_cursor
+
 from PIL import Image
+
 from intent_pilot.utils.config import Config
+from intent_pilot.utils.encoding import encode_image
 from intent_pilot.utils.img_utils import extract_element_bbox
 from intent_pilot.utils.models.askui import get_labeled_image
-from intent_pilot.utils.encoding import encode_image
-from intent_pilot.utils.models.prompts import (
-    get_user_first_message_prompt,
-    get_user_prompt,
-)
-from intent_pilot.utils.models.gpt4 import format_gpt4v_message, get_response_from_gpt4v
-from intent_pilot.utils.terminal import (
-    ANSI_BLUE,
-    ANSI_RESET,
-    ANSI_BRIGHT_GREEN,
-    ANSI_RED,
-)
+from intent_pilot.utils.models.gpt4 import (format_gpt4v_message,
+                                            get_response_from_gpt4v)
+from intent_pilot.utils.models.prompts import (get_user_first_message_prompt,
+                                               get_user_prompt)
+from intent_pilot.utils.screenshot import capture_screen_with_cursor
+from intent_pilot.utils.terminal import (ANSI_BLUE, ANSI_BRIGHT_GREEN,
+                                         ANSI_RED, ANSI_RESET)
 
 config = Config()
 

@@ -1,9 +1,8 @@
-from PIL import Image, ImageDraw
-from pathlib import Path
-from fuzzywuzzy import process
 import re
-from PIL import ImageFont
+from pathlib import Path
 
+from fuzzywuzzy import process
+from PIL import Image, ImageDraw, ImageFont
 
 ARIAL_FONT_PATH = Path(__file__).parent / "font_assets" / "arial.ttf"
 

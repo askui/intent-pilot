@@ -1,10 +1,8 @@
-import pyautogui
-import time
-import math
-import pyautogui
-import time
 import math
 import platform
+import time
+
+import pyautogui
 import pyperclip
 
 os_name = platform.system()

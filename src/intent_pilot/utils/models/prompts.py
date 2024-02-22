@@ -1,4 +1,5 @@
 import platform
+
 from intent_pilot.utils.config import Config
 
 # Prompts source: https://github.com/OthersideAI/self-operating-computer/blob/main/operate/models/prompts.py

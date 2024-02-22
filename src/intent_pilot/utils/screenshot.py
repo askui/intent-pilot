@@ -1,5 +1,6 @@
 import platform
 import subprocess
+
 import pyautogui
 from PIL import ImageGrab
 

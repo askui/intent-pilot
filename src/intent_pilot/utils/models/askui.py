@@ -1,9 +1,11 @@
-import os
-import requests
 import json
-from intent_pilot.utils.encoding import encode_string, encode_image
-from intent_pilot.utils.img_utils import draw_bboxes, open_pil_image
+import os
+
+import requests
+
 from intent_pilot.utils.config import Config
+from intent_pilot.utils.encoding import encode_image, encode_string
+from intent_pilot.utils.img_utils import draw_bboxes, open_pil_image
 
 config = Config()
 

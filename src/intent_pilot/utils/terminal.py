@@ -1,6 +1,7 @@
 import os
 import platform
 import sys
+
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
 
@@ -23,8 +24,8 @@ def get_user_input():
 
 
 from prompt_toolkit import prompt
-from prompt_toolkit.validation import Validator, ValidationError
 from prompt_toolkit.styles import Style
+from prompt_toolkit.validation import ValidationError, Validator
 
 
 # Validator to ensure the input is not empty

@@ -1,19 +1,17 @@
-from prompt_toolkit import prompt
-from intent_pilot.utils.config import Config
-from intent_pilot.utils.models.prompts import get_system_prompt
-from intent_pilot.utils.models.model_handler import call_gpt_4_vision_preview_labeled
-from intent_pilot.utils.controller.thought2command import operate
-from intent_pilot.utils.system_utils import show_notification
-from intent_pilot.utils.terminal import (
-    get_user_input,
-    ANSI_BLUE,
-    ANSI_RESET,
-    ANSI_BRIGHT_GREEN,
-    ANSI_RED,
-)
-from prompt_toolkit.shortcuts import message_dialog
-import time
 import argparse
+import time
+
+from prompt_toolkit import prompt
+from prompt_toolkit.shortcuts import message_dialog
+
+from intent_pilot.utils.config import Config
+from intent_pilot.utils.controller.thought2command import operate
+from intent_pilot.utils.models.model_handler import \
+    call_gpt_4_vision_preview_labeled
+from intent_pilot.utils.models.prompts import get_system_prompt
+from intent_pilot.utils.system_utils import show_notification
+from intent_pilot.utils.terminal import (ANSI_BLUE, ANSI_BRIGHT_GREEN,
+                                         ANSI_RED, ANSI_RESET, get_user_input)
 
 
 def get_args():
