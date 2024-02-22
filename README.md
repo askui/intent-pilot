@@ -51,7 +51,7 @@ sudo apt-get install python3-tk python3-dev
 
 We are currently working on the Windows version of the tool. It will be available __*soon*__.
 
-__Quick Fix__: The package also works on Windows but windows defender is deleting the `screenshot.py` file. You have to restore the file from the quarantine and add it to the exclusion list.
+__Quick Fix__: The package also works on Windows but windows defender is deleting the `src/intent_pilot/utils/screenshot.py` file. You have to restore the file from the quarantine and add it to the exclusion list.
 
 ## Installation
 
