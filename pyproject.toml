@@ -46,7 +46,7 @@ build-backend = "pdm.backend"
 distribution = true
 
 [tool.pdm.scripts]
-intent = "intent_pilot.run.app:main"
+intent = "python -m intent_pilot"
 sort = "isort ."
 format = "black ."
 lint = "ruff check ."
