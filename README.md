@@ -5,8 +5,7 @@ What can be said can be automated
 
 <p align="center">
     <a href="https://discord.com/invite/Gu35zMGxbx">
-        <img alt="Discord" src="https://img.shields.io/discord/912752657662349312
-        ?logo=discord&style=flat&logoColor=white"/></a>
+        <img alt="Discord" src="https://img.shields.io/discord/912752657662349312?logo=discord&style=flat&logoColor=white"/></a>
     <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white&style=flat" alt="License"/>
     <br>
     <br>
