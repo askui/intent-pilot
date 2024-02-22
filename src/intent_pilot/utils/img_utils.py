@@ -1,8 +1,13 @@
 
 from PIL import Image, ImageDraw
+from pathlib import Path
 from fuzzywuzzy import process
 import re
 from PIL import ImageFont
+
+
+ARIAL_FONT_PATH = Path(__file__).parent / "font_assets" / "arial.ttf"
+
 
 def open_pil_image(image_file):
     image = Image.open(image_file).convert("RGB")
@@ -12,7 +17,7 @@ def save_pil_image(image, filename = "uploaded_image.png"):
     image.save(filename)
     return filename
 
-def draw_bboxes(image, label_coordinates, font_style= "arial.ttf",font_size=20):
+def draw_bboxes(image, label_coordinates, font_style=ARIAL_FONT_PATH, font_size=20):
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(font_style, font_size)  # Load a font of size 15 for 1024x768 images. Adjust as needed.
 
