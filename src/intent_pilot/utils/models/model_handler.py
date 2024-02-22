@@ -4,9 +4,7 @@ import json
 
 import uuid
 from pathlib import Path
-from intent_pilot.utils.screenshot import (
-    capture_screen_with_cursor,
-)
+from intent_pilot.utils.screenshot import capture_screen_with_cursor
 from PIL import Image
 from intent_pilot.utils.config import Config
 from intent_pilot.utils.img_utils import extract_element_bbox
