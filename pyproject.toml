@@ -41,6 +41,8 @@ profile = "black"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[project.scripts]
+intent = "intent_pilot.run.app:main"
 
 [tool.pdm]
 distribution = true
