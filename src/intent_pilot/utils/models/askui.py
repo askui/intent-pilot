@@ -17,7 +17,27 @@ def request_image_annotation(
 ):
     image_base64 = encode_image(image_file)
     token_base64 = encode_string(token_id)
-    payload = {"image": "," + image_base64}
+    payload = {
+        "image": "," + image_base64,
+        "modelComposition": [
+                 {
+                    "task": "e2e_ocr",
+                    "architecture": "easy_ocr",
+                    "version": "1",
+                    "interface": "im2txtbox",
+                    "useCase": "faster",
+                    "tags": []
+                },
+                {
+                    "task": "od",
+                    "architecture": "yolo",
+                    "interface": "c9",
+                    "useCase": "default",
+                    "version": "6",
+                    "tags": [],
+                }
+        ]
+    }
     payload_json = json.dumps(payload)
     response = requests.post(
         f"{inference_endpoint}/api/v3/workspaces/{workspace_id}/inference",

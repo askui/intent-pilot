@@ -1,6 +1,6 @@
 [project]
 name = "intent-pilot"
-version = "0.1.0"
+version = "0.1.1"
 description = "what can be said can be automated"
 authors = [
     {name = "gitlost-murali-askui", email = "murali.kondragunta@askui.com"},
