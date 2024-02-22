@@ -18,7 +18,7 @@ What can be said can be automated
 
 **Intent Pilot** 
 
-Intent-Pilot is an orchestration of two tools: AskUI's object detector with OpenAI's GPT-4v to achieve automation. It is designed to automate repetitive tasks, and to assist users in performing complex tasks with ease.
+Intent-Pilot is an orchestration of two tools: AskUI's object detector with OpenAI's GPT-4v to achieve automation. It is designed to automate repetitive tasks, and to assist users in performing complex tasks with ease. This repository is our attempt to understand the GPT-4v's potential in automation and building an end-to-end automation tool.
 
 <br>
 
@@ -27,7 +27,30 @@ Intent-Pilot is an orchestration of two tools: AskUI's object detector with Open
 --video-here
 
 
-## Quick Start
+# Quick Start
+
+## Setup
+
+- Python 3.9 or later
+- OpenAI Key
+- AskUI Key
+    - For staters, we provide a global AskUI key with 4000 free credits.
+    - After that, you can get your own AskUI key by signing up at [AskUI](https://askui.com)
+
+### Linux
+- In case of linux, you may need to install the following packages:
+```shell
+sudo apt-get install xsel xclip 
+sudo apt-get install python3-tk python3-dev
+```
+### MacOS
+- In case of MacOS, you will have to grant permissions to the terminal to access the clipboard. You can do this by going to `System Preferences` -> `Security & Privacy` -> `Privacy` -> `Accessibility` and then adding the terminal to the list of apps that can control your computer.
+
+### Windows
+
+We are currently working on the Windows version of the tool. It will be available __*soon*__.
+
+## Installation
 
 ```shell
 pip install intent-pilot
@@ -41,9 +64,9 @@ After installation, simply run `intent` in your terminal:
 intent
 ```
 
-In case, you are unable to run the command, try installing the following dependencies for linux platforms:
+In case, you are unable to run the command, try running the following command:
 ```shell
-sudo apt-get install python3-tk python3-dev
+python -m intent_pilot
 ```
 
 # Contributing
