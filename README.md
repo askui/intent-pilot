@@ -15,7 +15,9 @@ What can be said can be automated
 
 <br>
 
-**Intent Pilot** 
+
+![alt text](<images/opening-dialogue.png>)
+# Intent Pilot 
 
 Intent-Pilot is an orchestration of two tools: AskUI's object detector with OpenAI's GPT-4v to achieve automation. It is designed to automate repetitive tasks, and to assist users in performing complex tasks with ease. This repository is our attempt to understand the GPT-4v's potential in automation and building an end-to-end automation tool.
 
@@ -48,6 +50,8 @@ sudo apt-get install python3-tk python3-dev
 ### Windows
 
 We are currently working on the Windows version of the tool. It will be available __*soon*__.
+
+__Quick Fix__: The package also works on Windows but windows defender is deleting the `screenshot.py` file. You have to restore the file from the quarantine and add it to the exclusion list.
 
 ## Installation
 
