@@ -1,5 +1,6 @@
 from PIL import ImageDraw
 
+
 def draw_thick_circle(draw, center, radius, thickness, color):
     """
     Draws a thick circle on an image with given parameters.
@@ -11,8 +12,16 @@ def draw_thick_circle(draw, center, radius, thickness, color):
     :param color: The color of the circle line.
     """
     for i in range(thickness):
-        draw.ellipse((center[0] - radius + i, center[1] - radius + i,
-                      center[0] + radius - i, center[1] + radius - i), outline=color)
+        draw.ellipse(
+            (
+                center[0] - radius + i,
+                center[1] - radius + i,
+                center[0] + radius - i,
+                center[1] + radius - i,
+            ),
+            outline=color,
+        )
+
 
 def draw_red_circle(image, bbox, thickness=5):
     """
@@ -26,7 +35,9 @@ def draw_red_circle(image, bbox, thickness=5):
     # Calculate the center of the bounding box
     center_x = (bbox[0] + bbox[2]) // 2
     center_y = (bbox[1] + bbox[3]) // 2
-    radius = min((bbox[2] - bbox[0]) // 2, (bbox[3] - bbox[1]) // 2) # Half the smaller dimension of the bbox
+    radius = min(
+        (bbox[2] - bbox[0]) // 2, (bbox[3] - bbox[1]) // 2
+    )  # Half the smaller dimension of the bbox
     # Define the bounding box of the circle
     # Draw the thick circle
     draw_thick_circle(draw, (center_x, center_y), radius, thickness, "red")

@@ -1,16 +1,24 @@
 import time
 from intent_pilot.utils.config import Config
 from intent_pilot.utils.controller.controller import Controller
-from intent_pilot.utils.terminal import ANSI_BLUE, ANSI_RESET, ANSI_BRIGHT_GREEN, ANSI_RED
+from intent_pilot.utils.terminal import (
+    ANSI_BLUE,
+    ANSI_RESET,
+    ANSI_BRIGHT_GREEN,
+    ANSI_RED,
+)
 
 config = Config()
 operating_system = Controller()
+
 
 def operate(operations):
     for operation in operations:
         # wait one second
         time.sleep(1)
-        operate_type = operation.get("operation").lower() # make a pydantic model for this
+        operate_type = operation.get(
+            "operation"
+        ).lower()  # make a pydantic model for this
         operate_thought = operation.get("thought")
         operate_detail = ""
 

@@ -1,4 +1,3 @@
-
 import pathlib
 import os
 from dotenv import load_dotenv
@@ -29,20 +28,20 @@ class Config:
         self.openai_api_key = (
             None  # instance variables are backups in case saving to a `.env` fails
         )
-        self.openai_base_url=None
-        self.aui_workspace_id=None
-        self.aui_token=None
+        self.openai_base_url = None
+        self.aui_workspace_id = None
+        self.aui_token = None
         self.openai_temperature = 0.1
         self.openai_max_tokens = 1000
 
         self.user_config_dir = pathlib.Path.home() / pathlib.Path(".askui")
-        self.user_config_env_path  = self.user_config_dir / 'intent-pilot.env'
+        self.user_config_env_path = self.user_config_dir / "intent-pilot.env"
 
         # load from user config file
         load_dotenv(self.user_config_env_path)
         # load from local .env file
         load_dotenv()
-    
+
     def __read_from_env_or_ask(self, env_name: str) -> str:
         value = os.getenv(env_name)
         if value is None:
@@ -78,12 +77,14 @@ class Config:
             api_key=api_key,
         )
         client.api_key = api_key
-        client.base_url = self.openai_base_url = os.getenv("OPENAI_API_BASE_URL", client.base_url)
+        client.base_url = self.openai_base_url = os.getenv(
+            "OPENAI_API_BASE_URL", client.base_url
+        )
         return client
-  
+
     def save_config(self):
         os.makedirs(self.user_config_dir, exist_ok=True)
-        with open(self.user_config_env_path, 'w') as f:
+        with open(self.user_config_env_path, "w") as f:
             f.write(f"ASKUI_WORKSPACE_ID={self.aui_workspace_id}\n")
             f.write(f"ASKUI_TOKEN={self.aui_token}\n")
             f.write(f"OPENAI_API_KEY={self.openai_api_key}\n")

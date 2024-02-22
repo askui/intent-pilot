@@ -20,6 +20,18 @@ requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
 
+
+
+[tool.pdm.dev-dependencies]
+dependencies = [
+    "ruff>=0.0.291",
+    "pytest>=7.4.2",
+    "isort>=5.12.0",
+    "black>=23.9.1",
+]
+
+
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
@@ -29,7 +41,10 @@ build-backend = "pdm.backend"
 distribution = true
 
 [tool.pdm.scripts]
-intent = "python -m intent_pilot.run.app"
-
-[project.scripts]
 intent = "intent_pilot.run.app:main"
+sort = "isort ."
+format = "black ."
+lint = "ruff check ."
+test = "pytest tests/"
+checks = {composite = ["sort . -c", "format . --check", "test -v tests/"]}
+fix = {composite = ["sort", "format", "lint", "test -v tests/"]}

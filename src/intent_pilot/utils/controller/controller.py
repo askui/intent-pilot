@@ -6,14 +6,16 @@ import time
 import math
 import platform
 import pyperclip
+
 os_name = platform.system()
+
 
 class Controller:
     def write(self, content):
         try:
             content = content.replace("\\n", "\n")
             pyperclip.copy(content)
-            if os_name=="Darwin":
+            if os_name == "Darwin":
                 self.press(["command", "v"])
             else:
                 self.press(["ctrl", "v"])
@@ -33,8 +35,8 @@ class Controller:
 
     def mouse(self, click_detail):
         try:
-            x = (click_detail.get("x"))
-            y = (click_detail.get("y"))
+            x = click_detail.get("x")
+            y = click_detail.get("y")
 
             if click_detail and isinstance(x, float) and isinstance(y, float):
                 self.click(x, y)
@@ -42,10 +44,14 @@ class Controller:
         except Exception as e:
             print("[Controller][mouse] error:", e)
 
-    def click(self, x_pixel, y_pixel, duration=0.2,
+    def click(
+        self,
+        x_pixel,
+        y_pixel,
+        duration=0.2,
         circle_radius=50,
         circle_duration=0.5,
-        ):
+    ):
         try:
             pyautogui.moveTo(x_pixel, y_pixel, duration=duration)
             start_time = time.time()
@@ -57,8 +63,7 @@ class Controller:
 
             pyautogui.click(x_pixel, y_pixel)
         except Exception as e:
-            print("[Controller][click_at_percentage] error:", e)    
-
+            print("[Controller][click_at_percentage] error:", e)
 
     def click_at_percentage(
         self,
