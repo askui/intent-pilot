@@ -30,6 +30,11 @@ dependencies = [
     "black>=23.9.1",
 ]
 
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
 
 
 [build-system]

@@ -2,8 +2,7 @@ import time
 
 from intent_pilot.utils.config import Config
 from intent_pilot.utils.controller.controller import Controller
-from intent_pilot.utils.terminal import (ANSI_BLUE, ANSI_BRIGHT_GREEN,
-                                         ANSI_RED, ANSI_RESET)
+from intent_pilot.utils.terminal import ANSI_BRIGHT_GREEN, ANSI_RED, ANSI_RESET
 
 config = Config()
 operating_system = Controller()

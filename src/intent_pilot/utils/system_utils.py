@@ -3,8 +3,7 @@ import subprocess
 
 from plyer import notification
 
-from intent_pilot.utils.terminal import (ANSI_BLUE, ANSI_BRIGHT_GREEN,
-                                         ANSI_RED, ANSI_RESET)
+from intent_pilot.utils.terminal import ANSI_BLUE, ANSI_RESET
 
 
 def show_notification(title, message):

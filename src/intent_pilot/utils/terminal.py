@@ -4,6 +4,7 @@ import sys
 
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
+from prompt_toolkit.validation import ValidationError, Validator
 
 style = Style.from_dict(
     {
@@ -21,11 +22,6 @@ def get_user_input():
         wrap_lines=False,  # Prevent automatic line wrapping
     )
     return user_input
-
-
-from prompt_toolkit import prompt
-from prompt_toolkit.styles import Style
-from prompt_toolkit.validation import ValidationError, Validator
 
 
 # Validator to ensure the input is not empty
