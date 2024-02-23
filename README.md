@@ -7,7 +7,7 @@
     <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white&style=flat" alt="License"/>
     <br>
     <br>
-    <strong>What can be said can be automated.</strong><br>
+    <strong>What can be said can be solved.</strong><br>
     <br><a href="https://askui.com">Get early access to the PTA model</a>‎ ‎ |‎ ‎ <a href="https://askui.com/">Scale on our shoulders</a><br>
 </p>
 
