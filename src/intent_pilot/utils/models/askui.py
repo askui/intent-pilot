@@ -5,6 +5,10 @@ import requests
 from intent_pilot.utils.config import Config
 from intent_pilot.utils.encoding import encode_image, encode_string
 from intent_pilot.utils.img_utils import draw_bboxes, open_pil_image
+import platform
+from importlib.metadata import version
+
+system_platform = platform.system()
 
 config = Config()
 
@@ -45,6 +49,8 @@ def request_image_annotation(
         headers={
             "Content-Type": "application/json",
             "Authorization": f"Basic {token_base64}",
+            'User-Agent': f"AskUI-Intent-Pilot/{version('intent_pilot')}",
+            'askui-user-agent': f"os:{system_platform}",
         },
     )
     return response
