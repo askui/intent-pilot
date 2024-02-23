@@ -19,12 +19,11 @@
 
 Intent-Pilot is an orchestration of two tools: AskUI's object detector with OpenAI's GPT-4v to achieve automation. It is designed to automate repetitive tasks, and to assist users in performing complex tasks with ease. This repository is our attempt to understand the GPT-4v's potential in automation and building an end-to-end automation tool.
 
-<br>
+We are inspired by and improve upon [Self-Operating-Computer](https://github.com/OthersideAI/self-operating-computer) by a more accurate object detection model and an improved prompting strategy. We also provide a more user-friendly interface, and a more intuitive way to interact with the tool. For example, the notification feature to let users know what is happening and what to do next. Also, our tool **works across all keyboard layouts - US, German, etc**, which was one of the limitations of similar tools.
 
 ## Demo
 
---video-here
-
+[watch the demo](images/demo.mp4)
 
 # Quick Start
 
@@ -33,7 +32,7 @@ Intent-Pilot is an orchestration of two tools: AskUI's object detector with Open
 - Python 3.9 or later
 - OpenAI Key
 - AskUI token
-    - For staters, we provide a global AskUI key with 4000 free credits.
+    - For staters, we provide a global AskUI key with 4000 free credits. `ASKUI_WORKSPACE_ID`: 'e26b43ea-a18f-4cd8-a6f1-e1e41dddec18' and `ASKUI_TOKEN`: 'gbwdeDjlWBrsr8nLjOVB'
     - After that, you can get your own AskUI key by signing up at [AskUI](https://askui.com)
 - You can also copy the .env.example file to .env and fill in the required details OR You can enter the credentials in the terminal when you start the app.
 
