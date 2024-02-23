@@ -23,7 +23,8 @@ We are inspired by and improve upon [Self-Operating-Computer](https://github.com
 
 ## Demo
 
-[watch the demo](images/demo.mp4)
+https://github.com/askui/intent-pilot/assets/106730702/59b3f2ba-4e41-455a-81e5-31100a136d22
+
 
 # Quick Start
 
