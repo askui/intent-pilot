@@ -94,10 +94,22 @@ pdm install
 
 ### Step 2: Run _Intent Pilot_
 
-Start the _Inten Pilot_ by running this command:
+Start the _Intent Pilot_ by running this command:
 ```sh
 pdm run intent
 ```
+
+## Flags
+
+* `--debug`: Prints debug output to the console
+* `--model -m <modelname>`: The model to use - `llava` or default `gpt4v`
+
+## Use Local llava Model Instead of gpt4-Vision
+Install [Ollama for your system from their Website](https://ollama.com/).
+
+* `ollama serve` to start the API locally
+* `ollama run llava` to start the model locally
+* Start the _Intent Pilot_ with the flag `-m llava`
 
 ## Join Our Discord Community
 
