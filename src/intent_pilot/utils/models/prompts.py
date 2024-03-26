@@ -268,6 +268,14 @@ def get_system_prompt(model, objective):
             SYSTEM_PROMPT_LABELED_WIN_LINUX,
             "SYSTEM_PROMPT_LABELED_WIN_LINUX",
         ),
+        ("ollama", "Darwin"): (
+            SYSTEM_PROMPT_LABELED_MAC,
+            "SYSTEM_PROMPT_LABELED_MAC",
+        ),
+        ("ollama", "Other"): (
+            SYSTEM_PROMPT_LABELED_WIN_LINUX,
+            "SYSTEM_PROMPT_LABELED_WIN_LINUX",
+        ),
         ("default", "Darwin"): (SYSTEM_PROMPT_MAC, "SYSTEM_PROMPT_MAC"),
         ("default", "Other"): (SYSTEM_PROMPT_WIN_LINUX, "SYSTEM_PROMPT_WIN_LINUX"),
     }
