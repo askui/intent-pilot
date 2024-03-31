@@ -81,11 +81,11 @@ def main():
         try:
             if config.model == Models.GPTV4:
                 operations = call_gpt_4_vision_preview_labeled(
-                    client, messages, skip_some_draw_labels=["text"]
+                    client, messages, skip_som_draw_labels=["text"]
                 )  # skip labels some
             elif config.model == Models.LLAVA:
                 operations = call_ollama_vision_labeled(
-                    client, messages, skip_some_draw_labels=["text"]
+                    client, messages, skip_som_draw_labels=["text"]
                 )
         except Exception as e:
             exception_count += 1
