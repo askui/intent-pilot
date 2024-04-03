@@ -15,7 +15,6 @@ dependencies = [
     "prompt-toolkit>=3.0.43",
     "fuzzywuzzy[speedup]>=0.18.0",
     "pyperclip>=1.8.2",
-    "langchain>=0.1.13",
 ]
 requires-python = ">=3.9"
 readme = "README.md"

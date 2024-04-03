@@ -3,7 +3,6 @@ import pathlib
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from langchain_community.chat_models import ChatOllama
 
 from intent_pilot.utils.terminal import get_env_values
 
@@ -82,10 +81,6 @@ class Config:
         client.base_url = self.openai_base_url = os.getenv(
             "OPENAI_API_BASE_URL", client.base_url
         )
-        return client
-
-    def initialize_ollama(self, model="llava", temperature=0):
-        client = ChatOllama(model=model, temperature=temperature)
         return client
 
     def save_config(self):
