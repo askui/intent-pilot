@@ -36,11 +36,6 @@ class Config:
         self.openai_temperature = 0.1
         self.openai_max_tokens = 1000
 
-        self.user_config_dir = pathlib.Path.home() / pathlib.Path(".askui")
-        self.user_config_env_path = self.user_config_dir / "intent-pilot.env"
-
-        # load from user config file
-        load_dotenv(self.user_config_env_path)
         # load from local .env file
         load_dotenv()
 
@@ -50,9 +45,6 @@ class Config:
             value_dict = get_env_values([env_name])
             value = value_dict[env_name]
         return value
-
-    def is_user_config_exists(self) -> bool:
-        return os.path.exists(self.user_config_env_path)
 
     def initialize_askui(self):
         self.aui_workspace_id = self.__read_from_env_or_ask("ASKUI_WORKSPACE_ID")
@@ -87,11 +79,3 @@ class Config:
     def initialize_ollama(self, model="llava", temperature=0):
         client = ChatOllama(model=model, temperature=temperature)
         return client
-
-    def save_config(self):
-        os.makedirs(self.user_config_dir, exist_ok=True)
-        with open(self.user_config_env_path, "w") as f:
-            f.write(f"ASKUI_WORKSPACE_ID={self.aui_workspace_id}\n")
-            f.write(f"ASKUI_TOKEN={self.aui_token}\n")
-            f.write(f"OPENAI_API_KEY={self.openai_api_key}\n")
-            f.write(f"OPENAI_API_BASE_URL={self.openai_base_url}\n")

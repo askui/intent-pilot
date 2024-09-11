@@ -33,7 +33,7 @@ https://github.com/askui/intent-pilot/assets/106730702/582d7dec-e3ff-43fd-9ab7-0
 
 - Python 3.9 or later
 - OpenAI Key
-- AskUI token
+- AskUI credentials
     - `ASKUI_WORKSPACE_ID` and `ASKUI_TOKEN` are needed in `.env` file to get the product running.
     - You can get your own AskUI credentials by signing up at [AskUI](https://askui.com)
 - You can also copy the `.env.example` file to `.env` and fill in the required details OR You can enter the credentials in the terminal when you start the app.
@@ -119,8 +119,6 @@ For real-time discussions and community support, join our Discord server:
 ## Contributing
 
 Thank you for your interest in contributing! We welcome involvement from the community.
-
-We are still deciding on the contribution guidelines. Please stay tuned for updates.
 
 ## Roadmap
 

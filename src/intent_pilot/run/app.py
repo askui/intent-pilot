@@ -38,12 +38,6 @@ def main():
 
     config.initialize_askui()
 
-    if (
-        not config.is_user_config_exists()
-        and prompt("Do you want to save the config user? y/n: \n") == "y"
-    ):
-        config.save_config()
-
     config.model = args.model
 
     client = None
