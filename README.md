@@ -31,7 +31,7 @@ https://github.com/askui/intent-pilot/assets/106730702/582d7dec-e3ff-43fd-9ab7-0
 
 ### Setup
 
-- Python 3.9 or later
+- Python 3.11 or later
 - OpenAI Key
 - AskUI credentials
     - `ASKUI_WORKSPACE_ID` and `ASKUI_TOKEN` are needed in `.env` file to get the product running.
