@@ -38,6 +38,8 @@ https://github.com/askui/intent-pilot/assets/106730702/582d7dec-e3ff-43fd-9ab7-0
     - You can get your own AskUI credentials by signing up at [AskUI](https://askui.com)
 - You can also copy the `.env.example` file to `.env` and fill in the required details OR You can enter the credentials in the terminal when you start the app.
 
+**⚠️IMPORTANT: If you saved the credentials with the flag `-c --config`, you MUST delete them with the flag `-d --deleteconfig` again for the local `.env` file to be read again.**
+
 #### Linux
 
 - In case of linux, you may need to install the following packages:
@@ -103,6 +105,10 @@ pdm run intent
 
 * `--debug`: Prints debug output to the console
 * `--model -m <modelname>`: The model to use - `llava` or default `gpt4v`
+* `-c --config`: Prompts to save the credentials configuration to `~/.askui/intent-pilot.env`
+* `-d --deleteconfig`: Prompts to delete the credentials from `~/.askui/intent-pilot.env`
+
+
 
 ## Use Local llava Model Instead of gpt4-Vision
 Install [Ollama for your system from their Website](https://ollama.com/).
