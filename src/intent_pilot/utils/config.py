@@ -58,8 +58,6 @@ class Config:
     def initialize_askui(self):
         self.aui_workspace_id = self.__read_from_env_or_ask("ASKUI_WORKSPACE_ID")
         self.aui_token = self.__read_from_env_or_ask("ASKUI_TOKEN")
-        print(self.aui_workspace_id)
-        print(self.aui_token)
 
     def assert_env_var(self, env_var):
         """
