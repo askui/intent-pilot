@@ -23,6 +23,8 @@ def get_args():
     parser = argparse.ArgumentParser(description="Intent-Pilot")
     parser.add_argument("--debug", action="store_true", help="Enable verbose mode")
     parser.add_argument('-m', '--model', type=str, default="gpt4v", help='Enter a model: llava or gpt4v (default: gpt4v)')
+    parser.add_argument('-c', '--config', action="store_true", help='Display prompt for saving user config in ~/.askui/intent-pilot.env')
+    parser.add_argument('-d', '--deleteconfig', action="store_true", help='Deletes the configuration from file ~/.askui/intent-pilot.env')
 
     args = parser.parse_args()
     return args
@@ -38,12 +40,6 @@ def main():
 
     config.initialize_askui()
 
-    if (
-        not config.is_user_config_exists()
-        and prompt("Do you want to save the config user? y/n: \n") == "y"
-    ):
-        config.save_config()
-
     config.model = args.model
 
     client = None
@@ -55,6 +51,18 @@ def main():
         print(f"{ANSI_BLUE} [Intent Pilot] Using model {Models.LLAVA}")
     else:
         raise ValueError(f"We do not support this model: {config.model}")
+
+    if (
+        args.deleteconfig
+        and prompt("Do you want to delete the user config? y/n: \n") == "y"
+    ):
+        config.delete_config()
+
+    if (
+        args.config
+        and prompt("Do you want to save the user config? y/n: \n") == "y"
+    ):
+        config.save_config()
 
     objective = get_user_input()
     messages = []

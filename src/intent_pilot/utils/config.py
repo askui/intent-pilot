@@ -41,6 +41,7 @@ class Config:
 
         # load from user config file
         load_dotenv(self.user_config_env_path)
+
         # load from local .env file
         load_dotenv()
 
@@ -95,3 +96,9 @@ class Config:
             f.write(f"ASKUI_TOKEN={self.aui_token}\n")
             f.write(f"OPENAI_API_KEY={self.openai_api_key}\n")
             f.write(f"OPENAI_API_BASE_URL={self.openai_base_url}\n")
+
+    def delete_config(self):
+        try:
+            os.remove(self.user_config_env_path)
+        except OSError:
+            pass
